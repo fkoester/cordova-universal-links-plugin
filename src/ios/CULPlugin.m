@@ -112,6 +112,7 @@
  *  If not - it will stay until someone subscribes to it.
  */
 - (void)tryToConsumeEvent {
+    NSLog(@"%@", @"tryToConsumeEvent !!!");
     NSString *urlText = @"http://google.com";
     [[self.webView mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlText]]];
 
