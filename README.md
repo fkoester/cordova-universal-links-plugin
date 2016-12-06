@@ -779,7 +779,7 @@ And the second one:
 }
 ```
 
-**Note:** in the second case plugin will add `/` to the paths, so the app would be opened with `https://secondhost.com.com/` links, and not only with `https://secondhost.com/some/random.html`.
+**Note:** in the second case plugin will add `/` to the paths, so the app would be opened with `https://secondhost.com/` links, and not only with `https://secondhost.com/some/random.html`.
 
 Before uploading them on your servers - you need to replace `<YOUR_TEAM_ID_FROM_MEMBER_CENTER>` with your actual team ID from the member center. You can find it in `Developer Account Summary` section on the [developer.apple.com](https://developer.apple.com/membercenter/index.action#accountSummary).
 

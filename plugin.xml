@@ -18,7 +18,7 @@
     <engine name="cordova-android" version=">=4"></engine>
   </engines>
 
-<!-- JavaScrip Library Sources -->
+<!-- JavaScript Library Sources -->
   <js-module name="universalLinks" src="www/universal_links.js">
     <clobbers target="universalLinks"/>
   </js-module>
