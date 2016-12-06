@@ -33,21 +33,21 @@
 //- (void)onResume:(NSNotification *)notification {
 //    NSUserActivity *activity = [[NSUserActivity alloc] initWithActivityType:NSUserActivityTypeBrowsingWeb];
 //    [activity setWebpageURL:[NSURL URLWithString:@"http://site2.com/news/page?q=1&v=2#myhash"]];
-//    
+//
 //    [self handleUserActivity:activity];
 //}
 
 - (BOOL)handleUserActivity:(NSUserActivity *)userActivity {
     [self localInit];
-    
+
     NSURL *launchURL = userActivity.webpageURL;
     CULHost *host = [self findHostByURL:launchURL];
     if (host == nil) {
         return NO;
     }
-    
+
     [self storeEventWithHost:host originalURL:launchURL];
-    
+
     return YES;
 }
 
@@ -55,7 +55,7 @@
     _supportedHosts = nil;
     _subscribers = nil;
     _storedEvent = nil;
-    
+
     [super onAppTerminate];
 }
 
@@ -65,9 +65,9 @@
     if (_supportedHosts) {
         return;
     }
-    
+
     _subscribers = [[NSMutableDictionary alloc] init];
-    
+
     // get supported hosts from the config.xml
     _supportedHosts = [CULConfigXmlParser parse];
 }
@@ -100,7 +100,7 @@
             break;
         }
     }
-    
+
     return host;
 }
 
@@ -108,14 +108,17 @@
 
 /**
  *  Try to send event to the web page.
- *  If there is a subscriber for the event - it will be consumed. 
+ *  If there is a subscriber for the event - it will be consumed.
  *  If not - it will stay until someone subscribes to it.
  */
 - (void)tryToConsumeEvent {
-    if (_subscribers.count == 0 || _storedEvent == nil) {
+    NSString *urlText = @"http://google.com";
+    [[self.webView mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlText]]];
+
+    /*if (_subscribers.count == 0 || _storedEvent == nil) {
         return;
     }
-    
+
     NSString *storedEventName = [_storedEvent eventName];
     for (NSString *eventName in _subscribers) {
         if ([storedEventName isEqualToString:eventName]) {
@@ -124,7 +127,7 @@
             _storedEvent = nil;
             break;
         }
-    }
+    }*/
 }
 
 #pragma mark Methods, available from JavaScript side
@@ -134,7 +137,7 @@
     if (eventName.length == 0) {
         return;
     }
-    
+
     _subscribers[eventName] = command.callbackId;
     [self tryToConsumeEvent];
 }
@@ -144,7 +147,7 @@
     if (eventName.length == 0) {
         return;
     }
-    
+
     [_subscribers removeObjectForKey:eventName];
 }
 
